@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BaitapTuan4_Bai2
+{
+    class Diem
+    {
+        private double x; //Hoành độ
+        private double y; //Tung độ
+
+        public Diem()
+        {
+            x = 0;
+            y = 0;
+        }
+        public Diem(int a, int b)
+        {
+            x = a;
+            y = b;
+        }
+
+        public void Nhap()
+        {
+            Console.WriteLine("Nhap toa do cua diem: ");
+            x = int.Parse(Console.ReadLine());
+            y = int.Parse(Console.ReadLine());
+        }
+
+        public void Xuat()
+        {
+            Console.WriteLine("Toa do cua diem la:({0};{1})", x, y);
+        }
+        public double KhoangCach(Diem d1, Diem d2)
+        {
+            double kc;
+            kc = Math.Sqrt(Math.Abs(d1.x - d2.y) * (d1.x - d2.y) + (d1.x - d2.y) * (d1.x - d2.y));
+            return kc;
+        }
+
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double KhoangCach;
+            Diem d1 = new Diem();
+            d1.Nhap();
+            d1.Xuat();
+            Diem d2 = new Diem();
+            d2.Nhap();
+            d2.Xuat();
+            Console.WriteLine("Khoang cach cua 2 diem la:{0}", kc);
+            Console.ReadLine();
+        }
+    }
+}
