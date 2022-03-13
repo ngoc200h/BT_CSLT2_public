@@ -35,11 +35,17 @@ namespace BaitapTuan4_Bai2
         }
         public double KhoangCach(Diem d1, Diem d2)
         {
-            double kc;
+            double kc = new double();
             kc = Math.Sqrt(Math.Abs(d1.x - d2.y) * (d1.x - d2.y) + (d1.x - d2.y) * (d1.x - d2.y));
             return kc;
         }
 
+        public void Xuatkc()
+        {
+            Diem d1 = new Diem();
+            Diem d2 = new Diem();
+            Console.WriteLine("Khoang cach cua 2 diem la:{0}", KhoangCach(d1, d2));
+        }
     }
     class Program
     {
@@ -52,7 +58,8 @@ namespace BaitapTuan4_Bai2
             Diem d2 = new Diem();
             d2.Nhap();
             d2.Xuat();
-            Console.WriteLine("Khoang cach cua 2 diem la:{0}", kc);
+            Diem d3 = new Diem();
+            d3.Xuatkc();
             Console.ReadLine();
         }
     }
