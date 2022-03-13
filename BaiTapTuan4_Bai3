@@ -1,0 +1,38 @@
+//Em khong lam duoc a :"(
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+ 
+namespace Mang1Chieu
+{
+    class Mang1Chieu
+    {
+       private int n; //Số phần tử của mảng
+       int[ ] a; //Mảng 1 chiều
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] Mang = new string[5];
+            Mang[0] = "1";
+            Mang[1] = "2";
+            Mang[2] = "3";
+            Mang[3] = "5";
+            Mang[4] = "6";
+ 
+            Console.WriteLine("Danh sach mang la:\n\n");
+ 
+            int i = 0;
+            Console.Write("\t1\t2\t3\t4\t5\n\n\t");
+            for (i = 0; i < 5; i++)
+            {
+                Console.Write("{0}\t", Mang[i]);
+            }
+            Console.ReadLine();
+        }
+    }
+}
