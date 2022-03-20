@@ -1,0 +1,172 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+public class Program
+{
+	public static void Main()
+	{
+		Console.WriteLine("Cong, tru, nhan va tim ma tran chuyen vi hai ma tran");
+		int[,] a;
+		int[,] b;
+		int m, n, p;
+		//Nhập kích thước ma trận A
+		Console.WriteLine("Nhap vao so hang ma tran A:");
+		m = int.Parse(Console.ReadLine());
+		Console.WriteLine("Nhap vao so cot ma tran A:");
+		n = int.Parse(Console.ReadLine());
+		//Đọc vào ma trận A
+		NhapMatrix(out a, m, n);
+		//In ma trận
+		InMatrix(a);
+		//Nhập kích thước ma trận B
+		Console.WriteLine("Nhap vao so hang ma tran B:");
+		m = int.Parse(Console.ReadLine());
+		Console.WriteLine("Nhap vao so cot ma tran B:");
+		n = int.Parse(Console.ReadLine());
+		//Đọc vào ma trận B
+		NhapMatrix(out b, m, n);
+        //In ma trận
+        InMatrix(b);
+
+
+        int[,] c;
+		//Cộng hai ma trận
+		Console.WriteLine("Ket qua cua phep cong ma tran:");
+		CongMatrix(a, b, out c);
+		InMatrix(c);
+
+		//Trừ hai ma trận
+		Console.WriteLine("Ket qua cua phep tru ma tran:");
+		HieuMatrix(a, b, out c);
+		InMatrix(c);
+
+		//Gọi Hàm nhân hai ma trận
+		Console.WriteLine("Ket qua cua phep nhan ma tran:");
+		NhanMatrix(a, b, out c);
+		InMatrix(c);
+
+		//ma trận chuyển vị
+		Console.WriteLine("Ma tran chuyen vi la:");
+		CVMatrix(a, b, out c);
+		InMatrix(c);
+
+		//Kiểm tra xem là ma trận vuông hay không
+
+		Console.ReadKey();
+	}
+	//Hàm đọc dữ liệu vào cho ma trận
+	public static void NhapMatrix(out int[,] M, int row, int col)
+	{
+		M = new int[row, col];
+		for (int i = 0; i < row; i++)
+			for (int j = 0; j < col; j++)
+			{
+				Console.Write("Phan tu [{0},{1}]:", i, j);
+				M[i, j] = int.Parse(Console.ReadLine());
+			}
+	}
+	//Hàm in ma trận 
+	public static void InMatrix(int[,] M)
+	{
+
+		if (M != null)
+		{
+			for (int i = 0; i < M.GetLength(0); i++)
+			{
+				for (int j = 0; j < M.GetLength(1); j++)
+				{
+					Console.Write("{0} ,", M[i, j]);
+				}
+				Console.WriteLine();
+			}
+		}
+	}
+	//Hàm cộng hai ma trận, hai ma trận muốn cộng được phải cùng kích thước
+	public static void CongMatrix(int[,] a, int[,] b, out int[,] c)
+	{
+		c = new int[a.GetLength(0), a.GetLength(1)];
+		if (a.GetLength(0) != b.GetLength(0) || a.GetLength(1) != b.GetLength(1))
+		{
+			Console.WriteLine("Hai ma tran khong cung kich thuoc nen khong cong duoc!");
+			c = null;
+		}
+		else
+		{
+			for (int i = 0; i < c.GetLength(0); i++)
+				for (int j = 0; j < c.GetLength(1); j++)
+					c[i, j] = a[i, j] + b[i, j];
+
+		}
+	}
+	//Hàm trừ hai ma trận
+	public static void HieuMatrix(int[,] a, int[,] b, out int[,] c)
+	{
+		c = new int[a.GetLength(0), a.GetLength(1)];
+		if (a.GetLength(0) != b.GetLength(0) || a.GetLength(1) != b.GetLength(1))
+		{
+			Console.WriteLine("Hai ma tran khong cung kich thuoc nen khong tru duoc!");
+			c = null;
+		}
+		else
+		{
+			for (int i = 0; i < c.GetLength(0); i++)
+				for (int j = 0; j < c.GetLength(1); j++)
+					c[i, j] = a[i, j] - b[i, j];
+
+		}
+	}
+
+	//Hàm nhân hai ma trận, A[m,n] * B[n,p] tức số cột của ma trận A phải bằng số hàng của ma trận B thì mới nhân được
+	public static void NhanMatrix(int[,] a, int[,] b, out int[,] c)
+	{
+		c = new int[a.GetLength(0), b.GetLength(1)];
+		if (a.GetLength(1) != b.GetLength(0))
+		{
+			Console.WriteLine("So cot của Ma tran A khong bang so hang của Ma tran B nen khong nhan duoc");
+			c = null;
+		}
+		else
+		{
+			for (int i = 0; i < a.GetLength(0); i++)
+				for (int j = 0; j < b.GetLength(1); j++)
+				{
+					c[i, j] = 0;
+					for (int k = 0; k < b.GetLength(0); k++)
+					{
+						c[i, j] = c[i, j] + a[i, k] * b[k, j];
+					}
+				}
+		}
+	}
+
+	//Ma trận chuyển vị
+	public static void CVMatrix(int[,] a, int[,] b, out int[,] c)
+	{
+		//Trừ các phần tử tương ứng
+		c = new int[a.GetLength(0), b.GetLength(1)];
+		for (int i = 0; i < a.GetLength(0); i++)
+			for (int j = 0; j < b.GetLength(1); j++)
+				c[j, i] = a[i, j];
+
+	}
+
+	//Ktra xem có vuông hay ko?
+	//public static void KiemTraMatrix(int[,] a, int[,] b, out int[,] c)
+ //   {
+	//	c = new int[a.GetLength(0), b.GetLength(1)];
+
+	//	for (int i = 0; i < a.GetLength(0); i++)
+	//	{
+	//		for (int j = 0; j < b.GetLength(1); j++)
+	//		{
+	//			if (a[i][j] != a[j][i])
+	//				return false;
+	//		}
+	//	}
+	//	return true;
+	//}
+}
