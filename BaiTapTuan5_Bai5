@@ -1,0 +1,77 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+    public class NhanVien
+    {
+        protected string HoTen, DiaChi;
+        protected int Namsinh, Luongcb, Heso, Phucap, Tongtien;
+        public NhanVien()
+        {
+            //HoTen = ""; 
+            //Namsinh = 0; 
+            //DiaChi = "";
+            //Luongcb = 0;
+            //Heso = 0;
+            //Phucap = 0;
+            //Tongtien = 0;
+        }
+        
+        public NhanVien(string HoTen, int Namsinh, string Diachi, int Luongcb, int Heso, int Phucap, int Tongtien)
+        {
+            this.HoTen = HoTen;
+            this.Namsinh = Namsinh;
+#pragma warning disable CS1717 // Assignment made to same variable
+            DiaChi = DiaChi;
+#pragma warning restore CS1717 // Assignment made to same variable
+            this.Luongcb = Luongcb;
+            this.Heso = Heso;
+            this.Phucap = Phucap;
+            this.Tongtien = Tongtien;
+        }
+
+        public void Nhap()
+        {
+            Console.Write("Nhap Ho va ten :"); HoTen = Console.ReadLine();
+            Console.Write("Nhap Nam sinh: "); Namsinh = Int32.Parse(Console.ReadLine());
+            Console.Write("Nhap Dia chi: "); DiaChi = Console.ReadLine();
+            Console.Write("Nhap Luong co ban: "); Luongcb = Int32.Parse(Console.ReadLine());
+            Console.Write("Nhap He so: "); Heso = Int32.Parse(Console.ReadLine());
+            Console.Write("Nhap Phu cap: "); Phucap = Int32.Parse(Console.ReadLine());
+        }
+
+        public void Xuat()
+        {
+            Console.WriteLine("Ho va ten: {0}", HoTen);
+            Console.WriteLine("Nam sinh: {0}", Namsinh);
+            Console.WriteLine("Dia chi: {0}", DiaChi);
+            Console.WriteLine("Luong co ban: {0}", Luongcb);
+            Console.WriteLine("He so: {0}", Heso);
+            Console.WriteLine("Phu cap: {0}", Phucap);
+        }
+
+            public double TongLuong()
+            {
+                double TongLuong;
+            TongLuong = (Luongcb * Heso + Phucap);
+            Console.WriteLine("Tong luong cua nhan vien do la: {0}", TongLuong);
+            return (TongLuong);
+            }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine();
+            NhanVien NV1 = new NhanVien();
+            NV1.Nhap();
+            NV1.Xuat();
+            NV1.TongLuong();
+            Console.ReadKey();
+        }
+    }
+}
