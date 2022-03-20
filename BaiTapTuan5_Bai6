@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+    public class SinhVien
+    {
+        protected string HoTen, MaSV, Quequan;
+        protected int Namsinh, DiemLT, DiemCSDL, DiemTB;
+        public SinhVien()
+        {
+            //HoTen = ""; 
+            //MaSV = 0;
+            //Namsinh = 0; 
+            //DiemLT = "";
+            //DiemCSDL = 0;
+            //DiemTB = 0;
+
+        }
+
+        public SinhVien(string HoTen, string MaSV, int Namsinh, int DiemLT, int DiemCSDL, int DiemTB)
+        {
+            this.HoTen = HoTen;
+            this.MaSV = MaSV;
+            this.Namsinh = Namsinh;
+#pragma warning disable CS1717 // Assignment made to same variable
+            this.Quequan = Quequan;
+#pragma warning restore CS1717 // Assignment made to same variable
+            this.DiemLT = DiemLT;
+            this.DiemCSDL = DiemCSDL;
+            this.DiemTB = DiemTB;
+        }
+
+        public void Nhap()
+        {
+            Console.Write("Nhap Ho va ten :"); HoTen = Console.ReadLine();
+            Console.Write("Nhap Ma sinh vien: "); MaSV = Console.ReadLine();
+            Console.Write("Nhap Nam sinh: "); Namsinh = Int32.Parse(Console.ReadLine());
+            Console.Write("Nhap Que quan :"); Quequan = Console.ReadLine();
+            Console.Write("Nhap Diem Lap Trinh: "); DiemLT = Int32.Parse(Console.ReadLine());
+            Console.Write("Nhap Diem Co so du lieu: "); DiemCSDL = Int32.Parse(Console.ReadLine());
+
+        }
+
+        public void Xuat()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Ho va ten: {0}", HoTen);
+            Console.WriteLine("Ma sinh vien: {0}", MaSV);
+            Console.WriteLine("Nam sinh: {0}", Namsinh);
+            Console.WriteLine("Que quan: {0}", Quequan);
+            Console.WriteLine("Diem Lap Trinh: {0}", DiemLT);
+            Console.WriteLine("Diem Co so du lieu: {0}", DiemCSDL);
+        }
+
+        public void TinhDTB()
+        {
+            double DiemTB = (DiemLT + DiemCSDL) / 2;
+            Console.WriteLine("Diem Trung binh: {0}", DiemTB);
+        }
+
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine();
+            SinhVien SV1 = new SinhVien();
+            SV1.Nhap();
+            SV1.Xuat();
+            SV1.TinhDTB();
+            Console.ReadKey();
+        }
+    }
+}
