@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+
+class TuDienAnhViet
+{
+    static public void Main()
+    {
+        int So;
+        string Tu;
+
+        Dictionary<int, string> My_dict1 =
+                       new Dictionary<int, string>();
+
+        My_dict1.Add(1, "Tu");
+        My_dict1.Add(2, "Dien");
+        My_dict1.Add(3, "Anh");
+        My_dict1.Add(4, "Viet");
+
+        foreach (KeyValuePair<int, string> ele1 in My_dict1)
+        {
+            Console.WriteLine("{0}. {1}",
+                      ele1.Key, ele1.Value);
+        }
+        Console.WriteLine();
+
+        Dictionary<string, string> My_dict2 =
+                new Dictionary<string, string>()
+                {
+                    {"Cho", "Dog"},
+                    {"Meo", "Cat"},
+                    {"Heo", "Pig"} 
+                };
+
+        foreach (KeyValuePair<string, string> ele2 in My_dict2)
+        {
+            Console.WriteLine("TiengViet: {0}, TiengAnh: {1}", ele2.Key, ele2.Value);
+        }
+
+        Console.WriteLine();
+        Console.Write("Nhap so can tim :"); So = Int32.Parse(Console.ReadLine());
+
+        if (My_dict1.ContainsKey(1) == true)
+        {
+            Console.WriteLine("Da tim thay tu");
+        }
+
+        else
+        {
+            Console.WriteLine("Khong tim thay tu");
+        }
+
+        Console.Write("Nhap tu can tim :"); Tu = Console.ReadLine();
+
+        if (My_dict2.ContainsValue("Cho") == true)
+        {
+            Console.WriteLine("Da tim thay tu!!");
+        }
+
+        else
+        {
+            Console.WriteLine("Khong tim thay tu");
+        }
+    }
+}
