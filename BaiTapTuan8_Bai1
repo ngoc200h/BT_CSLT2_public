@@ -1,0 +1,83 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BT_Tuần_8
+{
+
+    public class SinhVien
+    {
+        protected string HoTen, NgaySinh;
+        protected int DiemLT, DiemCSDL, DiemTKWeb;
+        public SinhVien()
+        {
+            //HoTen = ""; 
+            //NgaySinh = ""; 
+            //DiemLT = 0;
+            //DiemCSDL = 0;
+            //DiemTKWeb = 0;
+
+        }
+
+        public SinhVien(string HoTen, string NgaySinh, int DiemLT, int DiemCSDL, int DiemTKWeb)
+        {
+            this.HoTen = HoTen;
+            this.NgaySinh = NgaySinh;
+            this.DiemLT = DiemLT;
+            this.DiemCSDL = DiemCSDL;
+            this.DiemTKWeb = DiemTKWeb;
+        }
+
+        public void Nhap()
+        {
+            Console.Write("Nhap Ho va ten :"); HoTen = Console.ReadLine();
+            Console.Write("Nhap Ngay Sinh: "); NgaySinh = Console.ReadLine();
+            Console.Write("Nhap Diem Lap Trinh: "); DiemLT = Int32.Parse(Console.ReadLine());
+            Console.Write("Nhap Diem Co so du lieu: "); DiemCSDL = Int32.Parse(Console.ReadLine());
+            Console.Write("Nhap Diem Thiet ke web: "); DiemTKWeb = Int32.Parse(Console.ReadLine());
+        }
+        public void Xuat()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Ho va ten: {0}", HoTen);
+            Console.WriteLine("Ngay sinh: {0}", NgaySinh);
+            Console.WriteLine("Diem Lap Trinh: {0}", DiemLT);
+            Console.WriteLine("Diem Co so du lieu: {0}", DiemCSDL);
+            Console.WriteLine("Diem Thiet ke web: {0}", DiemTKWeb);
+        }
+        class QuanLySinhVien
+        {
+            private List<SinhVien> ListSinhVien = null;
+
+            public QuanLySinhVien()
+            {
+                ListSinhVien = new List<SinhVien>();
+            }
+
+
+            public int SoLuongSinhVien()
+            {
+                int Count = 0;
+                if (ListSinhVien != null)
+                {
+                    Count = ListSinhVien.Count;
+                }
+                return Count;
+            }
+
+        }
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Console.WriteLine();
+                SinhVien SV1 = new SinhVien();
+                SV1.Nhap();
+                SV1.Xuat();
+                Console.ReadKey();
+            }
+        }
+    }
+}
