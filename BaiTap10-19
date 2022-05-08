@@ -1,0 +1,98 @@
+//Bài 10
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BT10_19_Chuong_4
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Xanh_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.ForeColor = Color.Blue;
+        }
+
+        private void Do_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.ForeColor = Color.Red;
+        }
+
+        private void Tim_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.ForeColor = Color.Purple;
+        }
+
+        private void Vang_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.ForeColor = Color.Gold;
+        }
+
+        private void Bold_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font(txtMau_Chu.Font, txtMau_Chu.Font.Style ^ FontStyle.Bold);
+        }
+
+        private void Italic_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font(txtMau_Chu.Font, txtMau_Chu.Font.Style ^ FontStyle.Italic);
+        }
+        private void StrikeOut_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font(txtMau_Chu.Font, txtMau_Chu.Font.Style ^ FontStyle.Strikeout);
+        }
+        private void Underline_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font(txtMau_Chu.Font, txtMau_Chu.Font.Style ^ FontStyle.Underline);
+        }
+
+        private void VNTime_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font(".VnTime",12) ;
+        }
+        private void VNUniv_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font(".VnUniverse", 12);
+        }
+        private void VNVogue_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font(".VnVogue", 12);
+        }
+        private void Tahoma_CheckedChanged(object sender, EventArgs e)
+        {
+            txtMau_Chu.Font = new Font("Tahoma", 12);
+        }
+
+        private void Thoat_Click(object sender, EventArgs e)
+        {
+            DialogResult h = MessageBox.Show("Do you wat exit program ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            if (h == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+
+        }
+
+        private void LamLai_Click(object sender, EventArgs e)
+        {
+            txtMau_Chu.Clear();
+        }
+    }
+    
+
+}
