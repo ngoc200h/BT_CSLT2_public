@@ -199,3 +199,57 @@ MessageBox.Show(&quot;Bạn đã chọn sách " + clbSach.Text,"Thông báo",
 MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 }
+
+//15
+private void hsbRed_ValueChanged(object sender, EventArgs e)
+{
+this.BackColor = Color.FromArgb(hsbRed.Value, hsbGreen.Value,
+hsbBlue.Value);
+lblRed.Text = hsbRed.Value.ToString ();
+}
+private void hsbGreen_ValueChanged(object sender, EventArgs e)
+{
+this.BackColor = Color.FromArgb(hsbRed.Value, hsbGreen.Value,
+hsbBlue.Value);
+lblGreen.Text = hsbGreen.Value.ToString();
+}
+
+private void hsbBlue_ValueChanged(object sender, EventArgs e)
+{
+this.BackColor = Color.FromArgb(hsbRed.Value, hsbGreen.Value,
+hsbBlue.Value);
+lblBlue.Text = hsbBlue.Value.ToString();
+}
+
+//17
+    public partial class frmMove : Form
+    {
+    bool Kt; 
+    public frmMove()
+        {
+        InitializeComponent();
+        }
+        
+    private void frmMove_Load(object sender, EventArgs e)
+    {
+    Kt = true;
+    }
+    
+    private void tmrTimer_Tick(object sender, EventArgs e)
+    {
+    if (Kt)
+        {
+            if (lblMove.Left + lblMove.Width &lt; this.Width)
+            lblMove.Left = lblMove.Left + 13;
+        else
+        Kt = false;
+        }
+    if (!Kt)
+    {
+        if (lblMove.Left &gt; 0 )
+        lblMove.Left = lblMove.Left - 13;
+    else
+    Kt = true;
+}
+}
+}
