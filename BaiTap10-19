@@ -96,3 +96,106 @@ namespace BT10_19_Chuong_4
     
 
 }
+
+//Bài 11
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BT10_19_Chuong_4
+{
+    public partial class Form2 : Form
+    {
+        public Form2()
+        {
+            InitializeComponent();
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+        class Country
+        {
+            public string Name = string.Empty;
+            public string Capital = string.Empty;
+            public override ToString()
+            {
+                return Name + "-"Capital;
+            }
+        }
+        List<Country> CountryList = new List<Country>()
+            {
+            new Country(){Name="Japan",Capital="Tokyo",
+            };
+        private string SelectedCountry = string.Empty;
+        private void Country_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectedCountry = ((RadioButton)sender).Text; 
+            lblMain.Text = "Hãy chọn thành phố cho " + SelectedCountry;
+            
+        }
+        private string CapitalSelected = String.Empty;
+        private string CountrySelected = String.Empty;
+        private void Capital_CheckedChanged(object sender, EventArgs e)
+        {
+            CapitalSelected = ((RadioButton)sender).Text; 
+                                                          
+            string data = CountrySelected + "-" + CapitalSelected;
+            // Kiểm tra
+            bool IsMatch = false;
+            for (int I = 0; i < CountryList.Count; i++)
+            {
+                if (data == CountryList[i].ToString())
+                { // tương đồng rồi thì thoát 
+                    IsMatch = true; break;
+                }
+            }
+            if (IsMatch == false)
+            {
+                MessageBox.Show("Bạn sai rồi, thủ đô của " + CountrySelected " + "không phải là " + CapitalSelected); 
+            }
+        }
+    }
+}
+
+//13
+private void Form1_Load(object sender, EventArgs e)
+{
+clbSach.Items.Add("Visual Basic.NET 2005");
+clbSach.Items.Add("b");
+clbSach.Items.Add("c");
+clbSach.Items.Add("d");
+clbSach.Items.Add("e");
+clbSach.Items.Add("f");
+
+clbSach.MultiColumn = true;
+clbSach.ColumnWidth = clbSach.Width / 2;
+}
+private void btnKetqua_Click(object sender, EventArgs e)
+{
+string str=" ";
+// Duyệt qua từng phần tử đã chọn
+foreach (string item in clbSach.CheckedItems)
+str = str + item + ", ";
+str = str.Remove(str.Length - 2, 2);
+MessageBox.Show("Bạn đã chọn sách " + str, "Thông báo",
+MessageBoxButtons.OK,
+
+MessageBoxIcon.Information);
+
+}
+private void clbSach_ItemCheck(object sender, ItemCheckEventArgse)
+{
+
+if (e.NewValue == CheckState.Checked)
+MessageBox.Show(&quot;Bạn đã chọn sách " + clbSach.Text,"Thông báo",
+MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+}
