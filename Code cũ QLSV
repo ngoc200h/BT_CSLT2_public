@@ -1,0 +1,357 @@
+-- TẠO CSDL
+Create Database QLy_SinhVien
+On 
+(	Name = QL_SV_data,
+	Filename = 'G:\SQLgobrr\QLy_SVien.mdf',
+	size = 5,
+	Maxsize = 10,
+	filegrowth = 2
+)
+Log on
+(	Name = ql_sv_log,
+	Filename = 'G:\SQLgobrr\QLy_SVien.ldf',
+	size = 5mb,
+	Filegrowth = 2mb
+)
+-----------------------------
+--TẠO BẢNG
+--Sinh_Vien (MaSV, HDem, Ten, NgSinh, QQuan, GTinh, MaL, EMail)
+Use Qly_SinhVien
+Create table Sinh_Vien
+(	MaSV int identity(1,1) primary key not null,
+	HDem varchar(20) not null,
+	Ten varchar (10) not null,
+	NgSinh date,
+	QQuan varchar(50),
+	GTinh char(3),
+	MaL char(10) not null,
+	EMail char(25)
+)
+--Khoa (MaKH, TenKH, DiaChi)
+Create table Khoa
+(	MaKh char(10) primary key not null,
+	TenKh varchar(30),
+	Diachi varchar(20)
+)
+--M_Hoc (MaMH, TenMH, SoTC, MaKH)
+Create table M_Hoc
+(	MaMH char(10) primary key not null,
+	TenMH varchar(30),
+	SoTC int,
+	MaKH char(10) not null
+)
+--Lop (MaL, TenL, MaKH)
+
+Create table Lop
+(	MaL char(10) primary key not null,
+	TenL varchar(30),
+	MaKH char(10)
+)
+--Ket_Qua (MaMH, MaSV, Diem, KyThi)
+Create table Ket_Qua
+(	MaMH char(10) not null,
+	MaSV int not null,
+	Diem float,
+	KyThi tinyint not null,
+	Constraint PK_KQ primary key (MaMH, MaSV, KyThi)
+)
+--GD (MaGV, MaMH)
+Create table GD
+(	MaGV char(10) ,
+    MaMH char(10) Constraint GD primary key (MaGV, MaMH)
+)
+
+--Giảng viên ( MaGV, TenGV, SDT, MaKh  )
+Create table GiangVien
+(	MaGV char(10) ,
+    MaMH char(10) ,
+	SDT int not null,
+	MaKH char(10) Constraint GiangVien primary key (MaKH)
+)
+---------------------
+-- TẠO CÁC RÀNG BUỘC
+Alter table Sinh_Vien
+--Drop constraint FK_SV_Lop
+Add constraint FK_SV_Lop Foreign key (MaL) references Lop
+
+Alter table M_Hoc
+--Drop constraint FK_MHoc_Khoa
+Add constraint FK_MHoc_Khoa Foreign key (MaKh) references Khoa
+
+Alter table Lop
+--Drop constraint FK_Lop_Khoa
+Add constraint FK_Lop_Khoa Foreign key (MaKh) references Khoa
+
+Alter table Ket_qua
+--Drop constraint FK_KQ_SV
+Add constraint FK_KQ_SV Foreign key (MaSV) references Sinh_Vien;
+
+Alter table Ket_qua
+Add constraint FK_KQ_MHoc Foreign key (MaMH) references M_Hoc
+
+Alter table sinh_vien
+--Drop constraint cc_sv
+Add constraint CC_SV Check(GTinh = 'Nam' or GTinh = 'Nu')
+
+Alter table Ket_qua
+Add constraint CC_Kq1 Check(diem>=0 and diem<=10)
+
+Alter table M_Hoc
+Add constraint CC_MH Check(Sotc <=  10)
+
+Alter table ket_qua
+Add constraint DF_KQ Default 0 for Diem
+------------------------------------------
+
+--Insert dữ liệu
+Insert into Khoa(MaKH, TenKH, DiaChi) Values ('CNTT', 'Cong nghe Thong tin', '603_604')
+Insert into Khoa(MaKH, TenKH, DiaChi) Values ('NH', 'Ngan hang', '503_504')
+Insert into Khoa(MaKH, TenKH, DiaChi) Values ('NN', 'Ngoai ngu', '601_602')
+Insert into Khoa(MaKH, TenKH, DiaChi) Values ('TC', 'BM GD the chat', '203_204')
+
+Insert into Lop (MaL, TenL, MaKH) Values('CNTTAK14', 'Cong nghe Thong tin A K14','CNTT')
+Insert into Lop (MaL, TenL, MaKH) Values('CNTTBK14', 'Cong nghe Thong tin B K14','CNTT')
+Insert into Lop (MaL, TenL, MaKH) Values('TAAK14', 'Tieng Anh A K14','NN')
+Insert into Lop (MaL, TenL, MaKH) Values('TABK14', 'Tieng Anh B K14','NN')
+Insert into Lop (MaL, TenL, MaKH) Values('TCNHAK14', 'Tai chinh Ngan hang A K14','NH')
+Insert into Lop (MaL, TenL, MaKH) Values('CNTTAK13', 'Cong nghe Thong tin A K13','CNTT')
+Insert into Lop (MaL, TenL, MaKH) Values('CNTTBK13', 'Cong nghe Thong tin B K13','CNTT')
+
+
+Insert into Sinh_Vien(HDem, Ten, NgSinh, QQuan, GTinh, MaL, EMail)
+Values ('Nguyen Van', 'An', '10/12/1993', 'Hai Phong', 'Nam', 'CNTTAK14', 'AnNv@gmail.com')
+Insert into Sinh_Vien(HDem, Ten, NgSinh, QQuan, GTinh, MaL)
+Values ('Tran Viet', 'Anh', '12/12/1993', 'Hai Dương', 'Nam', 'CNTTAK14')
+Insert into Sinh_Vien(HDem, Ten, NgSinh, QQuan, GTinh, MaL)
+Values ('Le Thanh', 'Huong', '02/10/1992', 'Hai Duong', 'Nam', 'CNTTBK14')
+Insert into Sinh_Vien(HDem, Ten, NgSinh, QQuan, GTinh, MaL, EMail)
+Values ('Le Thi', 'Huyen', '02/15/1992', 'Ha Noi', 'Nu', 'TABK14', 'HuyenLT@gmail.com')
+Insert into Sinh_Vien(HDem, Ten, NgSinh, QQuan, GTinh, MaL)
+Values ('Le ', 'Huyen', '02/15/1992', 'Ha Noi', 'nu', 'TABK14')
+Insert into Sinh_Vien(HDem, Ten, NgSinh, QQuan, GTinh, MaL, EMail)
+Values ('Tran Le', 'Khanh', '05/20/1992', N'Ha Noi', 'Nu', 'TABK14', 'Khanhtl@gmail.com')
+Insert into Sinh_Vien(HDem, Ten, NgSinh, GTinh, MaL, EMail)
+Values ('Hoang Hai', 'Ha', '02/11/1992','Nam', 'CNTTBK13', 'Hahh@yahoo.com')
+Insert into Sinh_Vien(HDem, Ten, NgSinh, QQuan, GTinh, MaL)
+Values ('Nguyen Tuan', 'Thanh', '10/12/1991', 'Nghe An', 'Nam', 'CNTTBK13')
+
+Insert into M_Hoc(MaMH, TenMH, SoTC, MaKH) Values ('CSDL1', 'Co so du lieu 1', 3, 'CNTT')
+Insert into M_Hoc(MaMH, TenMH, SoTC, MaKH) Values ('CSDL2', 'Co so du lieu 2', 3, 'CNTT')
+Insert into M_Hoc(MaMH, TenMH, SoTC, MaKH) Values ('TA1', 'Tieng Anh 1', 4, 'NN')
+Insert into M_Hoc(MaMH, TenMH, SoTC, MaKH) Values ('TA2', 'Tieng Anh 2', 3, 'NN')
+Insert into M_Hoc(MaMH, TenMH, SoTC, MaKH) Values ('TDC', 'Tin Dai cuong', 3, 'CNTT')
+Insert into M_Hoc(MaMH, TenMH, SoTC, MaKH) Values ('CTDL & GT', 'Cau truc du lieu & giai thuat', 3, 'CNTT')
+Insert into M_Hoc(MaMH, TenMH, SoTC, MaKH) Values ('TDNH1', 'Tin dung ngan hang 1', 3, 'NH')
+
+
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('CSDL1', 1, 9, 3)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TDC', 1, 8, 1)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TA1', 2, 7, 1)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TA1', 1, 9, 1)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TDNH1', 2, 6, 4)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TA2', 4, 9, 3)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('CSDL1', 2, 9, 3)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('CSDL1', 3, 4, 3)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('CSDL1', 6, 7, 3)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TDC', 2, 4, 1)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TDC', 3, 8, 1)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TDC', 2, 8, 3)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TDC', 6, '', 1)
+Insert into Ket_qua(MaMH, MaSV, Diem, KyThi) Values ('TDC', 6, '', 2)
+
+select * from Sinh_Vien
+
+Select * from Ket_Qua
+where MaMH in ('CSDL1', 'TDC', 'ToanRR')
+
+select 'Ma Sinh Vien'=MaSV,HDem+' '+Ten as Ho_ten, QQuan 'Que Quan' From Sinh_Vien;
+
+select MaSV, COUNT(MaMH), sum(Diem) from Ket_Qua group by MaSV
+select * from Ket_Qua order by MaSV
+
+--5.1. Cho biết danh sách sinh viên sinh năm 1993
+select *from Sinh_Vien where year (NgSinh) = (1993)
+
+--5.2. Cho biết danh sách sinh viên lớp CNTTBK14
+select *from Sinh_Vien where MaL = 'CNTTBK14'
+
+--5.3. Cho biết những sinh viên đã thi môn CSDL1 hoặc TDC
+select MaSV from Ket_Qua where MaMH = 'CSDL1' OR MaMH = 'TDC'
+
+--5.4. Đưa ra danh sách các sinh viên có họ là Lê
+select *from Sinh_Vien where HDem Like 'Le%' 
+
+--5.5. Cho biết điểm cao nhất của mỗi môn thi
+select MaMH, max(DIEM) as Diemmax from Ket_Qua group by MaSV, MaMH
+
+--5.6. Cho danh sách các lớp có ít hơn 10 sinh viên
+select MaL, count (MaSV) as SLSV from Sinh_Vien group by MaL having count (MaSV) <10
+
+--5.7. Cho biết số lượng sinh viên của mỗi lớp
+select MaL, count ( MaSV ) from Sinh_Vien group by MaL
+
+--5.8. Cho biết thông tin Khoa của lớp CNTTAK14
+select * from Khoa INNER JOIN Lop
+ON Khoa.MaKH = Lop.MaKH where MaL like 'CNTTAK14'
+
+--5.9. Cho biết thông tin của sinh viên có điểm thi cao nhất
+select *, Diem from Sinh_Vien, Ket_Qua
+where Diem=(select max(Diem) from Ket_Qua)
+
+--5.10. Cho biết thông tin các sinh viên có kết quả thi môn CSDL1
+select *  From Sinh_Vien INNER JOIN Ket_Qua ON Sinh_Vien.MaSV = Ket_Qua.MaSV
+where MaMH = 'CSDL1'
+
+--5.11. Cho biết danh sách thông tin gồm: MaSV, HDem, Ten, TenL, TenKH
+select MaSV, HDem, Ten, TenL,TenKH From Sinh_Vien, Lop, Khoa 
+
+--5.12. Cho biết bảng điểm của sinh viên có mã số 2
+select MaMH, Diem, KyThi From Ket_Qua where MaSV = '2'
+
+--5.13. Cho biết các sinh viên chưa thi môn nào
+select * from Sinh_Vien inner join Ket_Qua ON Sinh_Vien.MaSV = Ket_Qua.MaSV
+where MaMH not in (select MaMH from M_Hoc)
+
+--5.14. Cho biết tên lớp của những sinh viên đã thi môn CSDL1
+select TenL from Lop inner join Ket_Qua on Lop
+
+--5.15. Cho biết số sinh viên đã thi môn CSDL1
+Select h.MaMH, TenMH, Count (MaSV) as 'Số SV đã thi CSDL1'
+From M_Hoc h inner join Ket_Qua k On h.MaMH = k.MaMH where h.MaMH = 'CSDL1'
+Group by h.MaMH, TenMH
+
+--5.16. Thống kê xem mỗi môn thi có bao nhiêu sinh viên dự thi
+select MaMH, Count (MaSV) as 'So SV Du Thi'
+from Ket_Qua group by MaMH
+
+--5.17. Cho biết điểm trung bình của mỗi sinh viên
+select HDem, Ten,  avg(Diem) as 'Diem Trung Binh' from Sinh_Vien inner join Ket_Qua on Sinh_Vien.MaSV= Ket_Qua.MaSV
+group by HDem, Ten
+
+--5.18. Cho biết những sinh viên có sinh nhật (trùng ngày và tháng sinh) với sinh viên có mã là 8.
+select b.* from Sinh_Vien a, Sinh_Vien b where a.MaSV=8 and b.MaSV<>8 and day(a.NgSinh)=day(b.NgSinh) and month(a.NgSinh) = month(b.NgSinh)
+
+----------------------------------
+--BT slide
+--2. Tạo trigger không cho xóa bản ghi trong bảng Lớp
+create trigger khongxoabanghi
+on Lop for update
+as
+  if (select count() from deleted ) > 0 
+  begin
+		raiserror ('khong duoc xoa', 16,1)
+		rollback tran
+	end
+
+----------------------------------
+--6.1. Tạo/thực thi hàm tính tuổi của các sinh viên trong bảng SV
+create function fnc_TH(@MSV INT)
+returns int
+as
+BEGIN
+	DECLARE @TUOI INT
+	select @TUOI = YEAR(GETDATE())-YEAR(NGSINH) FROM SINH_VIEN
+	return @TUOI
+END 
+
+SELECT DBO.fnc_TH(2) AS TUOI
+--6.2. Tạo/thực thi hàm tính số tiết của mỗi môn học trong bảng Môn học(1tc=16.5 tiết)
+Create function sotiet()
+Returns table 
+As 
+	Return
+	Select MaSV,MaMH, TenMH, 'sotiet' = SoTC * (16.5) From M_Hoc 
+
+Drop function sotiet 
+Select*From sotiet()
+
+--6.3. Tạo/thực thi hàm trả về số sinh viên K14 đã thi môn CSDL1
+Create function  sinhvien()
+Returns table 
+As
+        Return
+		Select Sinh_Vien.MaL,Ket_Qua.MaMH, count(Sinh_Vien.MaSV) as 'So SV K14 da thi' from Ket_Qua, Sinh_Vien
+		where MaMH='CSDL1' and MaL like '%K14' and Ket_Qua.MaSV=Sinh_Vien.MaSV group by MaMH, MaL
+Drop function sinhvien
+	
+select * from sinhvien()
+
+--6.4. Tạo/thực thi hàm trả về bảng điểm của mỗi sinh viên theo mã sinh viên đưa vào
+Create function fnc_bangdiem  (@msv char(10))
+Returns table 
+As
+	Return
+	Select MaMH,MaSV,Diem from Ket_qua
+	Where MaSV= @msv
+
+Drop function fnc_bangdiem
+
+Select * from fnc_bangdiem ('1')
+
+--6.5. Tạo/thực thi thủ tục cho biết danh sách kết quả sinh viên theo kỳ thi và theo mã sinh viên
+Create PROC Pro_DS @kt char(10), @msv char(10)
+As
+Begin 
+	Select Diem, KyThi,MaSV 
+	From Ket_qua
+	where KyThi = @kt and MaSV = @msv
+End 
+
+Drop PROC Pro_DS
+EXEC Pro_DS @kt ='1' ,@msv = '1'
+
+--6.6. Tạo/thực thi thủ tục nhập dữ liệu cho bảng môn học
+Create Proc Pro_nhapMH
+@mmh char(10), @tmh varchar(30),@stc int, @mk
+char(10)
+As
+
+Insert into M_Hoc
+Values (@mmh, @tmh, @stc, @mk)
+
+-- Gọi thực thi thủ tục:
+EXEC Pro_nhapMH 'EBK','E-Banking',3,'CNTT'
+
+--6.7. Tạo/thực thi thủ tục kiểm tra xem có tồn tại một môn học theo mã môn học đưa vào hay không rồi đưa ra thông báo
+Create PROC tontai (@mh char (20))
+as 
+	if exists (select MaMH from M_Hoc where MaMH= @mh)
+	print'Có môn học'
+	else print'Không có môn học'
+execute tontai 'CSDL5'
+
+EXEC tontai @mh ='CSDL5'
+
+--6.8. Tạo trigger đảm bảo khi nhập bản ghi cho bảng Khoa thì thuộc tính tên khoa không được rỗng
+create trigger trgInskhoa
+on khoa
+For insert
+As
+declare @tenkhoa varchar(10)
+select @tenkhoa= TenKH from inserted
+if @tenkhoa is null
+Begin
+	Raiserror ('Không được rỗng, hãy nhập lại',15,1) 
+	Rollback tran
+End 
+
+Insert into Khoa(MaKH, TenKH, DiaChi)  
+Values ('HTTT', ' ', '603_608') 
+
+--6.9. Tạo trigger không cho xóa bản ghi trong bảng lớp
+Create trigger trgDellop
+on Lop
+for delete 
+as
+ raiserror('Không được xóa',16,1)
+ rollback tran
+
+--6.10. Tạo trigger không cho sửa thuộc tính điểm trong bảng kết quả
+create trigger khongsuadiem
+on Ket_Qua for update
+as
+  if (select count(Diem) from deleted ) > 0 
+  begin
+		raiserror ('Không được sửa', 16,1)
+		rollback tran
+	end
